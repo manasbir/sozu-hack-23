@@ -4,11 +4,11 @@ import "solady/tokens/ERC721.sol";
 import "./FractionalizedNFT.sol";
 
 contract Fractionalizer {
-    function createFractionalizedNFT(address baseNFT, uint256 id) public returns (address) {
+    function createFractionalizedNFT(address baseNFT, uint256 id, uint256 amount) public returns (address) {
         ERC721(baseNFT).transferFrom(msg.sender, address(this), id);
         FractionalizedNFT fractionalizedNFT = new FractionalizedNFT();
         ERC721(baseNFT).approve(address(fractionalizedNFT), id);
-        fractionalizedNFT.initialize(baseNFT, id);
+        fractionalizedNFT.initialize(baseNFT, id, amount);
         return address(fractionalizedNFT);
     }
 }
