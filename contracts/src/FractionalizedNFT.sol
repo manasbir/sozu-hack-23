@@ -33,10 +33,17 @@ contract FractionalizedNFT is ERC721 {
             require(ownerOf(ids[i]) == msg.sender);
             yesOrNo ? proposals[proposalId].yesVoters.push(ids[i]) : proposals[proposalId].noVoters.push(ids[i]);
         }
-        if (proposals[proposalId].yesVoters.length > (amount / 2 ) + 1) {
+        // make reclaim unanimous
+        if (proposals[proposalId].yesVoters.length > (amount / 2) + 1) {
              _execute(proposalId);
         }
+    }
 
+    function _reclaim(uint256 proposalId) internal {
+        ERC721(baseNFT).transferFrom(address(this), fractionalizer, id);
+        for (uint256 i = 0; i < amount; i++) {
+            _burn(i);
+        }
     }
 
     function _execute(uint256 proposalId) internal {

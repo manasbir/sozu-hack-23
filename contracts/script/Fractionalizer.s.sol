@@ -13,6 +13,6 @@ contract FractionalizerScript is Script {
         TestNFT nft = new TestNFT();
         nft.mint(msg.sender, 1);
         nft.approve(addr, 1);
-        addr2 = Fractionalizer(addr).createFractionalizedNFT(address(nft), 1);
+        addr2 = Fractionalizer(addr).createFractionalizedNFT(address(nft), 1, 1000);
     }
 }
