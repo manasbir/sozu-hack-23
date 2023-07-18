@@ -12,6 +12,8 @@ contract Faucet {
     address public nft;
     address public owner;
 
+    uint256 dripRate = 0.1 ether;
+
     // this important
     bool public isSolvent;
 
@@ -30,11 +32,11 @@ contract Faucet {
         Dai(dai).mint(user, 1e20); 
         NFT(nft).drip(user);
 
-        if (address(this).balance < 0.1 ether) {
+        if (address(this).balance < dripRate) {
             isSolvent = false;
             emit OutOfFunds();
         } else {
-            WETH(payable(weth)).transfer(user, 1e17); //0.1 WETH
+            WETH(payable(weth)).transfer(user, dripRate); //0.1 WETH
             payable(user).transfer(0.1 ether);
             emit Drip(user);
         }
@@ -43,7 +45,7 @@ contract Faucet {
     function donate() public payable {
         require(msg.value > 0, "NO_DONATION");
         WETH(payable(weth)).deposit{value: msg.value/2}();
-        if (address(this).balance > 0.1 ether) {
+        if (address(this).balance > dripRate) {
             isSolvent = true;
         }
     }
