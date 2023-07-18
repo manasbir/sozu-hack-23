@@ -10,7 +10,7 @@ contract FaucetScript is Script {
         vm.startBroadcast();
         Faucet faucet = new Faucet();
         faucet.donate{value: .2 ether}();
-        faucet.drip(msg.sender);
+        faucet.drip(msg.sender, 100);
         vm.stopBroadcast();
         return address(faucet);
     }

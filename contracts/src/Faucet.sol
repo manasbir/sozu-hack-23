@@ -28,7 +28,7 @@ contract Faucet {
     }
 
     // call this !!!
-    // multiplier should be 15 for 1.5x, 20 for 2x, etc.
+    // multiplier should be 150 for 1.5x, 200 for 2x, etc.
     // so x100
     function drip(address user, uint256 multiplier) public onlyOwner {
         Dai(dai).mint(user, 1e20); 
@@ -36,10 +36,10 @@ contract Faucet {
 
         if (address(this).balance < dripRate * multiplier / 100) {
             if (address(this).balance >= dripRate) {
-                WETH(payable(wmnt)).transfer(user, dripRate); //0.1 WNT
+                WETH(payable(wmnt)).transfer(user, dripRate);
                 payable(user).transfer(dripRate);
             }
-            
+
             isSolvent = false;
             emit OutOfFunds();
         } else {
