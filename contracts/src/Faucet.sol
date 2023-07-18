@@ -8,7 +8,7 @@ import "./NFT.sol";
 
 contract Faucet {
     address public dai;
-    address public weth;
+    address public wmnt;
     address public nft;
     address public owner;
 
@@ -23,28 +23,36 @@ contract Faucet {
     constructor() {
         owner = msg.sender;
         dai = address(new Dai());
-        weth = address(new WETH());
+        wmnt = address(new WETH());
         nft = address(new NFT());
     }
 
     // call this !!!
-    function drip(address user) public onlyOwner {
+    // multiplier should be 15 for 1.5x, 20 for 2x, etc.
+    // so x100
+    function drip(address user, uint256 multiplier) public onlyOwner {
         Dai(dai).mint(user, 1e20); 
         NFT(nft).drip(user);
 
-        if (address(this).balance < dripRate) {
+        if (address(this).balance < dripRate * multiplier / 100) {
+            if (address(this).balance >= dripRate) {
+                WETH(payable(wmnt)).transfer(user, dripRate); //0.1 WNT
+                payable(user).transfer(dripRate);
+            }
+            
             isSolvent = false;
             emit OutOfFunds();
         } else {
-            WETH(payable(weth)).transfer(user, dripRate); //0.1 WETH
-            payable(user).transfer(0.1 ether);
+            WETH(payable(wmnt)).transfer(user, dripRate * multiplier / 100);
+            payable(user).transfer(dripRate * multiplier / 100);
+
             emit Drip(user);
         }
     }
 
     function donate() public payable {
         require(msg.value > 0, "NO_DONATION");
-        WETH(payable(weth)).deposit{value: msg.value/2}();
+        WETH(payable(wmnt)).deposit{value: msg.value/2}();
         if (address(this).balance > dripRate) {
             isSolvent = true;
         }
