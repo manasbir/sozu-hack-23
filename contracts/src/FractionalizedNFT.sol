@@ -7,7 +7,7 @@ contract FractionalizedNFT is ERC721 {
     string NAME;
     string SYMBOL;
 
-    constructor(string memory _name, string memory _symbol) {
+    constructor (string memory _name, string memory _symbol) {
         NAME = "F" + _name;
         _symbol = "FNFT";
     }
