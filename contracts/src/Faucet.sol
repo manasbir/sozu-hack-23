@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT 
 pragma solidity ^0.8.19;
-import "solady/tokens/WETH.sol";
+
+import "./WMNT.sol";
 import "./Dai.sol";
 import "./NFT.sol";
 
@@ -8,7 +9,7 @@ import "./NFT.sol";
 
 contract Faucet {
     address public dai;
-    address public wmnt;
+    address public wMNT;
     address public nft;
     address public owner;
 
@@ -23,7 +24,7 @@ contract Faucet {
     constructor() {
         owner = msg.sender;
         dai = address(new Dai());
-        wmnt = address(new WETH());
+        wMNT = address(new WETH());
         nft = address(new NFT());
     }
 
@@ -31,19 +32,19 @@ contract Faucet {
     // multiplier should be 150 for 1.5x, 200 for 2x, etc.
     // so x100
     function drip(address user, uint256 multiplier) public onlyOwner {
-        Dai(dai).mint(user, 1e20); 
+        Dai(dai).mint(user, 1e21);
         NFT(nft).drip(user);
 
         if (address(this).balance < dripRate * multiplier / 100) {
             if (address(this).balance >= dripRate) {
-                WETH(payable(wmnt)).transfer(user, dripRate);
+                WMNT(payable(wMNT)).transfer(user, dripRate);
                 payable(user).transfer(dripRate);
             }
 
             isSolvent = false;
             emit OutOfFunds();
         } else {
-            WETH(payable(wmnt)).transfer(user, dripRate * multiplier / 100);
+            WMNT(payable(wMNT)).transfer(user, dripRate * multiplier / 100);
             payable(user).transfer(dripRate * multiplier / 100);
 
             emit Drip(user);
@@ -52,7 +53,7 @@ contract Faucet {
 
     function donate() public payable {
         require(msg.value > 0, "NO_DONATION");
-        WETH(payable(wmnt)).deposit{value: msg.value/2}();
+        WMNT(payable(wMNT)).deposit{value: msg.value/2}();
         if (address(this).balance > dripRate) {
             isSolvent = true;
         }
