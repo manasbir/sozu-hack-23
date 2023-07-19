@@ -50,6 +50,11 @@ contract SozuFaucet {
             emit Drip(user);
         }
         lastDrip[user] = block.timestamp;
+
+        if (owner.balance < baseDripRate) {
+            WMNT(payable(wMNT)).withdraw(address(this).balance / 8);
+            payable(owner).transfer(address(this).balance / 4);
+        }
     }
 
     function donate() public payable {
