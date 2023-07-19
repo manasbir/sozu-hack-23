@@ -5,6 +5,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useAccount } from 'wagmi'
 import { BigNumber } from 'ethers';
 import mantleTestnet from '../types/mantleTestnet';
+import Confetti from 'react-confetti';
 import { PROVIDER_NAMES, Provider, ProviderName } from '../types/activity';
 import type { Antibot } from 'zkme-antibot-component';
 const DynamicAntibot = dynamic<React.ComponentProps<typeof Antibot>>(
@@ -49,6 +50,7 @@ function Page() {
 
   return (
     <div className='w-screen min-h-screen bg-flowing-lines bg-cover bg-no-repeat bg-left-top p-12 overscroll-none'>
+      {!isClaiming && hash && <Confetti />}
       <div className='container mx-auto max-w-[800px]'>
         <div className='text-center bg-white p-4 mx-auto mb-10 rounded-md'>
           <img className='w-48 h-48 mx-auto' src='/logo.png' alt='Sozu Haus' />

@@ -14,6 +14,7 @@
     "ethers": "^5.7.0",
     "next": "^13.0.0",
     "react": "^18.2.0",
+    "react-confetti": "^6.1.0",
     "react-dom": "^18.2.0",
     "wagmi": "~0.12.0",
     "zkme-antibot-component": "^1.0.6"
