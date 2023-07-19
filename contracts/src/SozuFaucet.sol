@@ -7,7 +7,7 @@ import "./NFT.sol";
 
 
 
-contract Faucet {
+contract SozuFaucet {
     address public dai;
     address public wMNT;
     address public nft;
