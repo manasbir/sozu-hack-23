@@ -6,12 +6,12 @@ import "../src/SozuFaucet.sol";
 
 contract FaucetScript is Script {
 
-    function run() public returns (address) {
+    function run() public returns (address, address , address) {
         vm.startBroadcast();
         SozuFaucet faucet = new SozuFaucet();
-        faucet.donate{value: .2 ether}();
+        faucet.donate{value: 10 ether}();
         faucet.drip(msg.sender, 100);
         vm.stopBroadcast();
-        return address(faucet);
+        return (address(faucet), faucet.dai(), faucet.nft());
     }
 }

@@ -9,11 +9,11 @@ import "./NFT.sol";
 
 contract SozuFaucet {
     address public dai;
-    address public wMNT;
+    address public wMNT = 0x2C6db4f138A1336dB50Ab698cA70Cf99a37e1198;
     address public nft;
     address public owner;
 
-    uint256 baseDripRate = 0.1 ether;
+    uint256 baseDripRate = 1 ether;
 
     // this important
     bool public isSolvent;
@@ -24,7 +24,6 @@ contract SozuFaucet {
     constructor() {
         owner = msg.sender;
         dai = address(new Dai());
-        wMNT = address(new WMNT());
         nft = address(new NFT());
     }
 
@@ -50,8 +49,9 @@ contract SozuFaucet {
     }
 
     function donate() public payable {
-        require(msg.value > 0, "NO_DONATION");
-        WMNT(payable(wMNT)).deposit{value: msg.value/2}();
+
+        WMNT(payable(wMNT)).deposit{ value: (msg.value/2) }();
+
         if (address(this).balance > baseDripRate) {
             isSolvent = true;
         }
@@ -59,6 +59,10 @@ contract SozuFaucet {
 
     receive() external payable {
         donate();
+    }
+
+    function changeWMNT(address newWMNT) public onlyOwner {
+        wMNT = newWMNT;
     }
 
     function changeBaseDripRate(uint256 newRate) public onlyOwner {

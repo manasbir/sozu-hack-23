@@ -20,16 +20,24 @@ contract NFT is ERC721 {
         currId += 10;
         totalSupply += 10;
     }
+
+    function mint(address user, uint256 amount) public {
+        for (uint256 i = 0; i < amount; i++) {
+            _mint(user, currId + i);
+        }
+        currId += amount;
+        totalSupply += amount;
+    }
         
     function name() public pure override returns (string memory) {
-        return "MANTLE FAUCET NFT";
+        return "SOZU MULTIFAUCET NFT";
     }
 
     function symbol() public pure override returns (string memory) {
-        return "NFT";
+        return "SOZUMF";
     }
 
     function tokenURI(uint256 id) public pure override returns (string memory) {
-        return "https://ipfs.io/ipfs/QmeWrRd9yQk3HbCHW3p7dgj5ZWHvdNpuR9jDXra8hWn5o1";
+        return "ipfs://QmWThadEoYrWDu4JeB8abxLqARAMXs2MNS788QX1mQHXHP";
     }
 }
