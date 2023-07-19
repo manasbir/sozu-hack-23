@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import {ERC20} from "./ERC20.sol";
+import {ERC20} from "solady/tokens/ERC20.sol";
 
 /// @notice Simple Wrapped Ether implementation.
 /// @author Solady (https://github.com/vectorized/solady/blob/main/src/tokens/WETH.sol)
 /// @author Solmate (https://github.com/transmissions11/solmate/blob/main/src/tokens/WETH.sol)
 /// @author Inspired by WETH9 (https://github.com/dapphub/ds-weth/blob/master/src/weth9.sol)
-contract WETH is ERC20 {
+contract WMNT is ERC20 {
     /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/
     /*                       CUSTOM ERRORS                        */
     /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/

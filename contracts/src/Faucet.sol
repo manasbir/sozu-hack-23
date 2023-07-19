@@ -24,7 +24,7 @@ contract Faucet {
     constructor() {
         owner = msg.sender;
         dai = address(new Dai());
-        wMNT = address(new WETH());
+        wMNT = address(new WMNT());
         nft = address(new NFT());
     }
 
