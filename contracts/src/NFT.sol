@@ -30,6 +30,6 @@ contract NFT is ERC721 {
     }
 
     function tokenURI(uint256 id) public pure override returns (string memory) {
-        return "https://ipfs.io/ipfs/QmeWrRd9yQk3HbCHW3p7dgj5ZWHvdNpuR9jDXra8hWn5o1";
+        return "ipfs://QmWThadEoYrWDu4JeB8abxLqARAMXs2MNS788QX1mQHXHP";
     }
 }
