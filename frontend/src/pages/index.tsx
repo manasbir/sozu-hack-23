@@ -80,7 +80,7 @@ function Page() {
             To prevent faucet botting, you must prove you are human via <a className="underline hover:text-gray-500" target='_blank' href='https://zk.me/'>zkMe</a>.
           </p>}
           {isHuman && !isConnected && <p className="mb-2">
-            Please connect the wallet you'd like to drip assets to.
+            Please connect the wallet you{"'"}d like to drip assets to.
           </p>}
           {!isHuman && <button className='bg-black hover:bg-gray-800 text-white p-2 w-full rounded-md text-center mb-4'
             onClick={() => {
