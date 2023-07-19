@@ -78,7 +78,7 @@ function Page() {
             To prevent faucet botting, you must prove you are human via <a className="underline hover:text-gray-500" target='_blank' href='https://zk.me/'>zkMe</a>.
           </p>}
           {isHuman && !isConnected && <p className="mb-2">
-            Please connect the wallet you'd like to drip assets to.
+            Please connect the wallet you{"'"}d like to drip assets to.
           </p>}
           {!isHuman && <button className='bg-black hover:bg-gray-800 text-white p-2 w-full rounded-md text-center mb-4'
             onClick={() => {
@@ -160,7 +160,7 @@ function Page() {
               Add to MetaMask
             </button>
             )</h2>
-          <h4 className="text-gray-500 mb-1">Faucet drips {">"}1 MNT, 1 wMNT, 500 DAI, and 10 NFTs (ERC721).</h4>
+          <h4 className="text-gray-500 mb-1">Faucet drips {">"}1 MNT, {">"}1 wMNT, 1000 DAI, and 10 NFTs (ERC721).</h4>
           <label>NFTs:</label>
           <a
             href='https://explorer.testnet.mantle.xyz/address/0x81fd1a6A47B0238d196546d64b39d63C3DA38942'
