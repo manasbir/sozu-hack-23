@@ -9,7 +9,7 @@ import "./NFT.sol";
 
 contract SozuFaucet {
     address public dai;
-    address public wMNT = 0x69AC69b272f96F5f17DDD9da3832ad9Dc86D1d8A;
+    address public wMNT = 0x2C6db4f138A1336dB50Ab698cA70Cf99a37e1198;
     address public nft;
     address public owner;
 
