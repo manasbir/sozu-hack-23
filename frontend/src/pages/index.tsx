@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic'
 import Axios from 'axios'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
@@ -18,9 +17,10 @@ function Page() {
   const [isHuman, setIsHuman] = useState(false);
   const [antibotOpen, setAntibotOpen] = useState(false);
   const [activity, setActivity] = useState<string[]>([]);
+  const [isClaiming, setClaiming] = useState<boolean>(false);
+  const [hash, setHash] = useState();
 
   const { isConnected, address } = useAccount();
-  const router = useRouter();
 
   useEffect(() => {
     if (!isHuman || !address) return;
@@ -38,7 +38,13 @@ function Page() {
   }, [isHuman, address])
 
   const submitClaim = () => {
-    Axios.post(`/api/drip`, { address });
+    setClaiming(true);
+    Axios
+      .post(`/api/drip`, { address })
+      .then(res => {
+        setHash(res.data.txHash)
+        setClaiming(false);
+      });
   }
 
   return (
@@ -60,11 +66,11 @@ function Page() {
             >
               <img className='w-5 h-5 inline mx-1' src='/WMNT.png' />wMNT</a>,
             <a className="inline-flex flex-row items-center border-2 border-gray rounded-md pr-1 ml-1"
-              href='https://explorer.testnet.mantle.xyz/address/0xd22d145e02F2064c5cE256a0583a1566b812Ae26'
+              href='https://explorer.testnet.mantle.xyz/address/0x50c3e956D52c4ecDaeec86547de5fd578b65D580'
               target='_blank'>
               <img className='w-5 h-5 inline mx-1' src='/DAI.png' />DAI</a>, <br /> and
             <a className="inline-flex flex-row items-center border-2 border-gray rounded-md pr-1 mx-1"
-              href='https://explorer.testnet.mantle.xyz/address/0x81fd1a6A47B0238d196546d64b39d63C3DA38942'
+              href='https://explorer.testnet.mantle.xyz/address/0x8AC79cc20bA8E96c1d7Baf4ec485d7118e805E5b'
               target='_blank'>
               <img className='w-5 h-5 inline mx-1' src='/NFT.png' />NFT</a> on the Mantle testnet, at once.
           </h3>
@@ -110,12 +116,26 @@ function Page() {
             {activity.map((item) => (
               <li className='text-gray-500'>{item}</li>
             ))}
-            <button
+            {!isClaiming && !hash && <button
               className='bg-black hover:bg-gray-800 text-white p-2 w-full rounded-md text-center my-2'
               onClick={() => submitClaim()}
             >
               Claim {1 + (activity.length * .2)} MNT + Others
-            </button>
+            </button>}
+
+            {isClaiming && !hash && <button
+              className='bg-black hover:bg-gray-800 text-white p-2 w-full rounded-md text-center my-2'
+            >
+              Claiming...
+            </button>}
+
+            {!isClaiming && hash && <a
+              className='block w-full bg-black hover:bg-gray-800 text-white p-2 w-full rounded-md text-center my-2'
+              href={`https://explorer.testnet.mantle.xyz/tx/${hash}`}
+              target='_blank'
+            >
+              Claim complete! View transaction on Mantle Explorer
+            </a>}
           </>
           }
         </div>
@@ -163,11 +183,11 @@ function Page() {
           <h4 className="text-gray-500 mb-1">Faucet drips {">"}1 MNT, {">"}1 wMNT, 1000 DAI, and 10 NFTs (ERC721).</h4>
           <label>NFTs:</label>
           <a
-            href='https://explorer.testnet.mantle.xyz/address/0x81fd1a6A47B0238d196546d64b39d63C3DA38942'
+            href='https://explorer.testnet.mantle.xyz/address/0x8AC79cc20bA8E96c1d7Baf4ec485d7118e805E5b'
             target='_blank'
             className="block bg-gray-200 hover:bg-gray-300 w-full rounded-md text-center mb-4 w-full px-4 overflow-hidden"
           >
-            0x81fd1a6A47B0238d196546d64b39d63C3DA38942
+            0x8AC79cc20bA8E96c1d7Baf4ec485d7118e805E5b
           </a>
           <label>wMNT:</label>
           <a
@@ -180,11 +200,11 @@ function Page() {
           <button className="bg-gray-200 hover:bg-gray-300 w-full rounded-md text-center mb-4">Add to MetaMask</button>
           <label>DAI:</label>
           <a
-            href='https://explorer.testnet.mantle.xyz/address/0xd22d145e02F2064c5cE256a0583a1566b812Ae26'
+            href='https://explorer.testnet.mantle.xyz/address/0x50c3e956D52c4ecDaeec86547de5fd578b65D580'
             target='_blank'
             className="block bg-gray-200 hover:bg-gray-300 w-full rounded-md text-center mb-2 w-full px-4 overflow-hidden"
           >
-            0xd22d145e02F2064c5cE256a0583a1566b812Ae26
+            0x50c3e956D52c4ecDaeec86547de5fd578b65D580
           </a>
           <button className="bg-gray-200 hover:bg-gray-300 w-full rounded-md text-center mb-4">Add to MetaMask</button>
         </div>
