@@ -13,6 +13,8 @@ contract SozuFaucet {
     address public nft;
     address public owner;
 
+    mapping (address => uint256) public lastDrip;
+
     uint256 baseDripRate = 1 ether;
 
     // this important
@@ -29,6 +31,7 @@ contract SozuFaucet {
 
     // amount in wei
     function drip(address user, uint256 amount) public onlyOwner {
+        require(lastDrip[user] + 1 days < block.timestamp, "TIMER_NOT_EXPIRED");
         Dai(dai).mint(user, 1e21);
         NFT(nft).drip(user);
 
@@ -46,6 +49,7 @@ contract SozuFaucet {
 
             emit Drip(user);
         }
+        lastDrip[user] = block.timestamp;
     }
 
     function donate() public payable {
