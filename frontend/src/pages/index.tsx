@@ -38,9 +38,7 @@ function Page() {
   }, [isHuman, address])
 
   const submitClaim = () => {
-    Axios.post(`/drip`, {
-      address
-    });
+    Axios.post(`/api/drip`, { address });
   }
 
   return (
@@ -84,9 +82,9 @@ function Page() {
           </p>}
           {!isHuman && <button className='bg-black hover:bg-gray-800 text-white p-2 w-full rounded-md text-center mb-4'
             onClick={() => {
-              // setIsHuman(true)
-              if (!antibotOpen) setAntibotOpen(true)
-              else router.reload();
+              setIsHuman(true)
+              // if (!antibotOpen) setAntibotOpen(true)
+              // else router.reload();
             }}
           >
             {antibotOpen ? 'Something went wrong. Click here to reload the page.' : 'Submit Proof-of-Humanity'}
@@ -112,7 +110,12 @@ function Page() {
             {activity.map((item) => (
               <li className='text-gray-500'>{item}</li>
             ))}
-            <button className='bg-black hover:bg-gray-800 text-white p-2 w-full rounded-md text-center my-2' onClick={() => router.reload()}>Claim {1 + (activity.length * .2)} MNT</button>
+            <button
+              className='bg-black hover:bg-gray-800 text-white p-2 w-full rounded-md text-center my-2'
+              onClick={() => submitClaim()}
+            >
+              Claim {1 + (activity.length * .2)} MNT + Others
+            </button>
           </>
           }
         </div>
