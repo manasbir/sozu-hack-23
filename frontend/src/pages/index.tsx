@@ -157,7 +157,7 @@ function Page() {
               Add to MetaMask
             </button>
             )</h2>
-          <h4 className="text-gray-500 mb-1">Faucet drips {">"}1 MNT, 1 wMNT, 500 DAI, and 10 NFTs (ERC721).</h4>
+          <h4 className="text-gray-500 mb-1">Faucet drips {">"}1 MNT, {">"}1 wMNT, 1000 DAI, and 10 NFTs (ERC721).</h4>
           <label>NFTs:</label>
           <a
             href='https://explorer.testnet.mantle.xyz/address/0x81fd1a6A47B0238d196546d64b39d63C3DA38942'
