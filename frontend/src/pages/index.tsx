@@ -199,7 +199,22 @@ function Page() {
           >
             0x2C6db4f138A1336dB50Ab698cA70Cf99a37e1198
           </a>
-          <button className="bg-gray-200 hover:bg-gray-300 w-full rounded-md text-center mb-4">Add to MetaMask</button>
+          <button 
+            className="bg-gray-200 hover:bg-gray-300 w-full rounded-md text-center mb-4"
+              onClick={() => {
+                window.ethereum?.request?.({
+                  method: 'wallet_watchAsset',
+                  params: {
+                    type: 'ERC20', 
+                    options: {
+                      address: '0x2C6db4f138A1336dB50Ab698cA70Cf99a37e1198', 
+                      symbol: 'wMNT', 
+                      decimals: 18, 
+                    },
+                  },
+                });
+              }}
+          >Add to MetaMask</button>
           <label>DAI:</label>
           <a
             href='https://explorer.testnet.mantle.xyz/address/0x50c3e956D52c4ecDaeec86547de5fd578b65D580'
@@ -208,7 +223,22 @@ function Page() {
           >
             0x50c3e956D52c4ecDaeec86547de5fd578b65D580
           </a>
-          <button className="bg-gray-200 hover:bg-gray-300 w-full rounded-md text-center mb-4">Add to MetaMask</button>
+          <button 
+            className="bg-gray-200 hover:bg-gray-300 w-full rounded-md text-center mb-4"
+            onClick={() => {
+              window.ethereum?.request?.({
+                method: 'wallet_watchAsset',
+                params: {
+                  type: 'ERC20', 
+                  options: {
+                    address: '0x50c3e956D52c4ecDaeec86547de5fd578b65D580', 
+                    symbol: 'DAI', 
+                    decimals: 18, 
+                  },
+                },
+              });
+            }}
+          >Add to MetaMask</button>
         </div>
 
         <div className='text-left bg-white p-4 mx-auto mb-10 rounded-md'>
